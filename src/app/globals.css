@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #070311;
+  --foreground: #f7f2ff;
+
+  /* intentionally obnoxious (but consistent) palette */
+  --annoy-1: #00ffd5;
+  --annoy-2: #ff3df2;
+  --annoy-3: #ffe600;
+  --annoy-4: #7c3aed;
+  --annoy-ink: #06040a;
 }
 
 @theme inline {
@@ -14,13 +21,78 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #070311;
+    --foreground: #f7f2ff;
   }
 }
 
 body {
-  background: var(--background);
+  background: radial-gradient(
+      1200px 900px at 12% 18%,
+      color-mix(in oklab, var(--annoy-2) 35%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 700px at 86% 22%,
+      color-mix(in oklab, var(--annoy-1) 30%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      800px 700px at 60% 92%,
+      color-mix(in oklab, var(--annoy-3) 18%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(180deg, #070311, #0b0620 55%, #060215);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--annoy-3) 65%, transparent);
+  color: var(--annoy-ink);
+}
+
+.annoy-card {
+  background: color-mix(in oklab, white 6%, transparent);
+  border: 1px solid color-mix(in oklab, white 14%, transparent);
+  box-shadow:
+    0 1px 0 color-mix(in oklab, white 18%, transparent),
+    0 16px 60px color-mix(in oklab, black 55%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+}
+
+.annoy-ring {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, white 22%, transparent),
+    0 0 0 4px color-mix(in oklab, var(--annoy-2) 28%, transparent),
+    0 0 40px color-mix(in oklab, var(--annoy-1) 22%, transparent);
+}
+
+@keyframes bee-wobble {
+  0% {
+    transform: translate(0, 0) rotate(-6deg);
+  }
+  25% {
+    transform: translate(1px, -1px) rotate(4deg);
+  }
+  50% {
+    transform: translate(-1px, 1px) rotate(-2deg);
+  }
+  75% {
+    transform: translate(2px, 0px) rotate(6deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(-6deg);
+  }
+}
+
+.bee {
+  animation: bee-wobble 120ms infinite linear;
+  user-select: none;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.a11y-worse {
+  filter: contrast(0.85) saturate(1.25) brightness(0.96);
 }
